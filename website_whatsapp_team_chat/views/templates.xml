@@ -1,0 +1,54 @@
+<odoo>
+    <data>
+	    <!-- <template id="assets_frontend" inherit_id="website.assets_frontend" name="Website Sale">
+	        <xpath expr="." position="inside">
+	            <script type="text/javascript" src="/website_whatsapp_team_chat/static/src/js/website.js" />
+	        </xpath>
+	    </template> -->
+        <template id="whatsapp_frontend_layout" name="Whatsapp" inherit_id="web.frontend_layout" priority="20">
+            <xpath expr="//div[@id='wrapwrap']/footer" position="after">
+                <div>
+                	<link rel="stylesheet" type="text/css" href="/website_whatsapp_team_chat/static/src/css/whatsapp.css"/>
+				    <div class="o_whatsapp_thread_window o_in_home_menu" style="transition: height 200ms linear 0s; margin-right: 0px; bottom: 0px; right: 0px;height: 47px;">
+				    	<div class="o_thread_window_header">
+					        <span class="o_thread_window_title">
+					            <t t-esc="res_company.team_id.whatsapp_chat_title"/>
+					        </span>
+					        <span class="o_thread_window_buttons">
+					            <a href="#" class="o_thread_window_close fa fa-close"></a>
+					        </span>
+					    </div>
+						<div class="o_mail_thread">
+		        			<div class="o_mail_thread_content">
+						    	<t t-foreach="res_company.team_id.team_members_ids" t-as="team_member_id">
+						    		<a t-attf-href="https://wa.me/#{team_member_id.mobile}" target="_blank" title="Whatsapp Send" style="text-decoration: none;">
+							    		<div class="o_thread_message   o_mail_not_discussion">
+				    						<div class="o_thread_message_sidebar">
+												<div class="o_thread_message_sidebar_image">
+				                					<img alt="" t-attf-src="/web/partner_image/#{team_member_id.id}" class="o_thread_message_avatar rounded-circle o_mail_redirect"/>
+				            					</div>
+				   							</div>
+				    						<div class="o_thread_message_core">
+				        						<p class="o_mail_info text-muted">
+							                    <strong class="o_thread_author o_mail_redirect">
+							                        <t t-esc="team_member_id.name"/>
+							                    </strong>
+				            					<span class="o_thread_icons">
+				            						<t t-esc="team_member_id.time"/>
+							                    </span>
+							                </p>
+							                <div class="o_thread_message_content">
+							                    <t t-esc="team_member_id.department"/> 
+							                </div>
+							            </div>
+							        </div>
+							    </a>
+							    </t>
+						</div>
+					</div>
+				</div>
+			    </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,111 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record id="website_whatsapp_team_chat.team_list" model="ir.ui.view">
+            <field name="name">website_whatsapp_team_chat.team_list</field>
+            <field name="model">whats.app.chat.team</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!--        Form View -->
+
+        <record id="website_whatsapp_team_chat.team_form" model="ir.ui.view">
+            <field name="name">website_whatsapp_team_chat.team_form</field>
+            <field name="model">whats.app.chat.team</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class='oe_title '>
+                            <h1>
+                                <field name="name" style="width:50%%"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="whatsapp_chat_title"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Members">
+                                <br/>
+                                <field name="team_members_ids">
+                                    <kanban class="o_res_partner_kanban">
+                                        <field name="id"/>
+                                        <field name="image_128"/>
+                                        <field name="name"/>
+
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click  o_res_partner_kanban"
+                                                     style="max-width: 200px">
+                                                    <div class="o_kanban_image">
+                                                        <img t-if="record.image_128.raw_value"
+                                                             t-att-src="kanban_image('res.partner', 'image_128', record.id.value)"
+                                                             options='{"preview_image": "image_128", "size": [90, 90]}'
+                                                             alt="logo"/>
+                                                        <t t-if="!record.image_128.raw_value">
+                                                            <img class="o_kanban_image" alt="Avatar"
+                                                                 t-att-src='_s + "/base/static/img/avatar.png"'/>
+                                                        </t>
+                                                    </div>
+                                                    <div class="oe_kanban_details">
+                                                        <strong class="o_kanban_record_title oe_partner_heading">
+                                                            <field name="name"/>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="website_whatsapp_team_chat.view_res_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="time"/>
+                    <field name="department"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="website_whatsapp_team_chat.view_res_company_form" model="ir.ui.view">
+            <field name="name">res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='country_id']/.." position="after">
+                    <field name="team_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record id="website_whatsapp_team_chat.action_window_team" model="ir.actions.act_window">
+            <field name="name">WhatsApp Teams</field>
+            <field name="res_model">whats.app.chat.team</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="WhatsApp Team" id="website_whatsapp_team_chat.menu_team"
+                  parent="website.menu_website_global_configuration"
+                  action="website_whatsapp_team_chat.action_window_team"/>
+
+    </data>
+</odoo>
